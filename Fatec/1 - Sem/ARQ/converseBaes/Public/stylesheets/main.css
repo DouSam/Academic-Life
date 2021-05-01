@@ -1,0 +1,51 @@
+*{
+    font-family: 'Oswald', sans-serif;font-weight:500;font-size:1.05rem
+}
+html{
+    background: aquamarine;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+h1{
+    font-size: 1.5rem;
+}
+
+label{
+    width: 250px;
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+#opcao{
+    text-align: start;
+}
+
+.form-signin {
+    text-align: center;
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+    background: azure;
+    border-radius: 10px;
+}
+#botao{
+    text-align: center;
+}
+.footer{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    height: 25px;
+    width: 100%;
+    background: darkcyan;
+    text-align: center;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, height=device-height , initial-scale=1, shrink-to-fit=no">
+        <title>Industrial Contas</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href='/styles/main.css'>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="display-2 text-center">Plano de Contas</h1>
+            <a href="/nova"><button type="button" class="btn btn-outline-primary">Nova Conta</button></a>
+            <hr>
+            <% contas.forEach(function(conta){ %>
+                <% if(conta.contaPai == ""){ %>
+                    <p class="my-1"><strong><%= conta.conta %> - <%= conta.nome %></strong></p>
+                <% }else{ %>
+                    <% let nivel = conta.conta.split('.').length;%>
+                    <% if(nivel == 1){ %>
+                        <p class="my-1"> &nbsp &nbsp <strong><%= conta.conta %> - <%= conta.nome %></strong></p>
+                    <% } else if( nivel == 2){ %>
+                        <p class="my-1"> &nbsp &nbsp &nbsp <strong><%= conta.conta %> - <%= conta.nome %></strong></p>
+                    <% } else if( nivel == 3){ %>
+                        <p class="my-1"> &nbsp &nbsp &nbsp &nbsp <%= conta.conta %> - <%= conta.nome %></p>
+                    <% } else if( nivel == 4){ %>
+                        <p class="my-1"> &nbsp &nbsp &nbsp &nbsp &nbsp <%= conta.conta %> - <%= conta.nome %></p>
+                    <% } else if( nivel == 5){ %>
+                        <p class="my-1"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <%= conta.conta %> - <%= conta.nome %></p>
+                    <% } else if( nivel == 6){ %>
+                        <p class="my-1"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <%= conta.conta %> - <%= conta.nome %></p>
+                    <% } %>
+                <% } %>
+            <% }) %>
+        </div>
+    </body>
+    
+</html>

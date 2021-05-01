@@ -1,0 +1,34 @@
+Livros/
+*.pdf
+ADM/
+*.bmp
+.thumbs/
+Interfatec/
+Introducao Machine Learning/
+*.docx
+*.doc
+*.zip
+*.rar
+*.exe
+*.png
+*.jpg
+*.xml
+node_modules/
+HAR/
+ING/
+ING2/
+ING3/
+MAT/
+CAL/
+CEE/
+**/ENG1/Listas/
+*.txt
+LDP/
+ECO/
+Agenda - professor/
+EST/
+IHC/
+SOC/
+SOI/
+.vscode
+dump/
