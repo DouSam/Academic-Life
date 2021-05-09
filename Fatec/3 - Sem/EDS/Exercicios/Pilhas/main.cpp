@@ -12,15 +12,27 @@ Altere a classe para que ela armazene valores do tipo caractere ao invés de int
 
 - Nao faz verificacoes caso nao tenha memoria suficiente para continuar o processo.
 
+- Melhorias que podem ser feitas na versao 2:
+-- Reduzir redundancias das funcoes que constam nas duas classes.
+-- Permitir manipular a pilha, removendo apenas um elemento e inserindo apenas um elemento em qualquer momento da execucao.
+-- Utilizacao de headers para diminuir o tamanho e organizar melhor a informacao.
+-- Ajustar para nao deixar lixo na pilha caso sobre espaco na mesma.
+
 */
 
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <math.h>
 
 using namespace std;
 
-//Criando a pilha para armazenamento de numeros inteiros. A quantidade de elemento e limitada a variavel tamanho.
+//Definindo cores para impressão
+#define COLOR_VERMELHO     "\x1b[31m"
+#define COLOR_VERDE        "\x1b[32m"
+#define COLOR_AMARELO      "\x1b[33m"
+#define COLOR_RESET        "\x1b[0m"
+
+//Criando a pilha para armazenamento de double. A quantidade de elemento e limitada a variavel tamanho.
 class PilhaInt{
     private:
         int topo;
@@ -32,31 +44,40 @@ class PilhaInt{
         void Inicia(int tamanhoI, int idI){
             topo = -1;
             tamanho = tamanhoI;
+            //Alocando o total de memoria equivalente ao tamanho inserido
             elementos = (double*) malloc(sizeof(double)*tamanhoI);
+            //Id que sera usado posteriormente para operacoes
             id = idI;
         }
         //Metodo para inserir elemento na pilha
         int empilhar(double elem){
+            //Verifica se ela ainda possui espaco
             if(topo+1 == tamanho){
+                //Caso nao possua, retorna falso
                 return 0;
             }else{
+                //Se ela possuir espaco, incrementamos o topo
                 topo++;
+                //E adicionamos o elemento
                 elementos[topo] = elem;
             }
+            //No final se tudo ocorrer como planejado, retornamos verdadeiro
             return 1;
         }
         //Metodo para imprimir pilha
         void imprimir(){
-            cout << "------------ PILHA " << id << "------------\n";
+            cout << COLOR_VERDE "------------ PILHA " << id << "------------\n";
+            //Percorre cada elemento da pilha
             for(int i = topo; i >= 0 ;i--){
                 cout << elementos[i];
                 if(i == topo){
+                    //Apenas demosntra qual e o topo
                     cout << " <- TOPO\n";
                 }else{
                     cout << endl;
                 }
             }
-            cout << "--------------------------------\n";
+            cout << "--------------------------------\n" COLOR_RESET;
         }
         //Metodo para dsempilhar
         double desempilhar(){
@@ -79,7 +100,7 @@ class PilhaInt{
         }
         //Metodo para inverter a pilha
         int inverter(){
-            //Array auxiliar para salvar a pilha original
+            //Array auxiliar para salvar a pilha original e topo original
             int topoAux = topo;
             double *auxElem = (double*) malloc(sizeof(double)*(topo+1)); 
             //Copiando os elementos da pilha para auxElem
@@ -128,15 +149,15 @@ class PilhaInt{
                 empilhar(auxElem[topoAux]);
                 topoAux--;
             }
-
-            cout << "Maior valor: " << maior << endl;
+            //Imprimindo os valores que foram encontrados.
+            cout << COLOR_VERDE "Maior valor: " << maior << endl;
             cout << "Menor valor: " << menor << endl;
-            cout << "Media dos valores: " << soma/(topo+1) << endl;
+            cout << "Media dos valores: " << soma/(topo+1) << COLOR_RESET << endl;
             return 1;
         }
         /*Metodo para verificar se uma pilha é maior que outra pilha
         * Para verificar, nao e necessario percorrer a pilha pois temos
-        * o identificador do teto da mesma.
+        * o identificador do topo da mesma.
         */
         int comparaTamPilha(int tetoPilha2){
             if(tetoPilha2 > topo){
@@ -149,18 +170,22 @@ class PilhaInt{
         }
         //Metodo para verificar se duas pilhas sao iguais
         int verificaIgualdade(PilhaInt pilha2){
-            /*Como esse metodo e chamado de uma unica forma, estou assumindo
-            * que amabas as pilhas possuem o mesmo topo, entao percorrei por ele.
+            //Ate entao as pilhas sao consideradas como iguais e retorna verdadeiro
+            int iguais = 1;
+            /* Esse metodo e chamado por uma pilha auxiliar nunca pela pilha original
+            *  e dessa forma, podemos desempilhar ela sem armazenar os valores. Nao
+            *  e necessario fazer a verificacao de tamanho por aqui, na funcao main
+            *  essa verificacao ja foi realizada antes de chamar a funcao verificaIgualdade.
             */
-           int iguais = 1;
-           while(topo != -1){
-               if(desempilhar() != pilha2.desempilhar()){
+            while(topo != -1){
+                //Desempilho ambas as pilhas e vejo se o valor e igual ate chegarmos no inicio dela
+                if(desempilhar() != pilha2.desempilhar()){
                    iguais = 0;
                    //Nao e necessario percorrer o restante da pilha
                    break;
-               }
-           }
-           return iguais;
+                }
+            }
+            return iguais;
         }
         //Metodo para retornar os valores impares de uma pilha
         int retornaImpar(){
@@ -172,20 +197,22 @@ class PilhaInt{
             while(topo != -1)
             {   
                 auxNum = desempilhar();
+                //Se o valor nao for divisivel por 2, considero ele com par e imprimo ele;
                 if(fmod(auxNum,2) != 0){
                     cout << auxNum << "\t";
+                    //Altero a flag para informar que encontramos um impar
                     flag++;
                 };
             }
             if(!flag){
-                cout << "Pilha nao possui numeros pares.\n";
+                cout << COLOR_VERDE "Pilha nao possui numeros pares.\n" COLOR_RESET;
             }
             cout << endl;
             return 1;
         }
 };
 
-//Criando a pilha para armazenamento de numeros inteiros. A quantidade de elemento e limitada a variavel tamanho.
+//Criando a pilha para armazenamento de char. A quantidade de elemento e limitada a variavel tamanho.
 class PilhaCha{
     private:
         int topo;
@@ -198,13 +225,22 @@ class PilhaCha{
             topo = -1;
             tamanho = tamanhoI;
             elementos = (char*) malloc(sizeof(char)*tamanhoI);
+            //O mesmo ID que consta em pilhaInt para as escolhas.
             id = idI;
+        }
+        //Setter para a variavel topo, somente sera usado em casos de duplicacao de pilha
+        int setTopo(int i){
+            topo = i;
+            return 1;
         }
         //Metodo para inserir elemento na pilha
         int empilhar(char elem){
-            if(topo == tamanho){
+            //Empilha ate que o topo seja o tamanho
+            if((topo+1) == tamanho){
+                //Se o topo for o tamanho, a pilha esta cheia e retorna falso
                 return 0;
             }else{
+                //Se o topo nao for igual, inserimos o valor no topo da pilha
                 topo++;
                 elementos[topo] = elem;
             }
@@ -212,7 +248,7 @@ class PilhaCha{
         }
         //Metodo para imprimir pilha
         void imprimir(){
-            cout << "------------ PILHA " << id << "------------\n";
+            cout << COLOR_VERDE "------------ PILHA " << id << "------------\n";
             for(int i = topo; i >= 0 ;i--){
                 cout << elementos[i];
                 if(i == topo){
@@ -221,11 +257,11 @@ class PilhaCha{
                     cout << endl;
                 }
             }
-            cout << "--------------------------------\n";
+            cout << "--------------------------------\n" COLOR_RESET;
         }
         //Metodo para dsempilhar
         char desempilhar(){
-            //Variavel para salvar o cgar que esta sendo retirado
+            //Variavel para salvar o char que esta sendo retirado
             char cha = elementos[topo];
             topo--;//Diminuindo o topo
             //Nao e necessario limpar memoria pois o espaco pode ser usado novamente
@@ -255,15 +291,70 @@ class PilhaCha{
             PilhaCha aux2;
             aux.Inicia(tamanho,-1);
             aux2.Inicia(tamanho,-1);
+            //Copia os valores do espaço de memoria que esta a pilha original.
             memcpy(aux.elementos,elementos,sizeof(elementos));
             memcpy(aux2.elementos,elementos,sizeof(elementos));
+            //Definindo os topos
+            aux.setTopo(topo);
+            aux2.setTopo(topo);
+            //Invertemos uma pilha
             aux2.inverter();
-            while(topo != -1){
+            //Desempilhamos
+            while(aux.topo != -1){
                 char a = aux.desempilhar();
                 char a2 = aux2.desempilhar();
                 if(a != a2){
                     return 0;
                 }
+            }
+            return 1;
+        }
+        /** Metodo para inverter as palavras mas sem trocar a posicao delas
+         * irei salvar os valores em um vetor de char, entao irei percorrer
+         * ele ate encontrar o ' '(espaco), irei guardar a posicao do espaco
+         * e inverter apenas aquele trecho. Outra forma mais trabalhosa de
+         * se fazer esse metodo, seria criando 2 pilhas, uma seria usada para
+         * armazenar a palavra e a outra seria usada para temporiariamente 
+         * armazenar a frase, assim a cada espaco eu iria inverter a pilha
+         * da palavra e depois inserir a palavra na pilha frase.
+         */
+        int inverteLetras(){
+            //Variavel auxiliar para guardar a posicao inicial da palavra
+            int inicioP = topo;
+            //Variavel auxiliar para armazenar a posicao final da palavra
+            int fimP = 0;//Lembrando que na pilha, o fim da palavra acaba sendo o inicio da mesma
+            //Variavel para armazenar temporiamente o char para fazer a troca
+            char aux = ' ';//32
+            //Array auxiliar para salvar a pilha original e topo original
+            int topoAux = topo;
+            char *auxElem = (char*) malloc(sizeof(char)*(topo+1)); 
+            //Copiando os elementos da pilha para auxElem
+            for(int i = topoAux; i >= 0;i--){
+                //Primeiro eu tiro o elemento do topo
+                auxElem[i] = desempilhar();
+                //Verifico se e um espaco ou se e o inicio da pilha
+                //Ambos os casos significa que eu terminei uma palavra
+                if(auxElem[i] == 32 || i == 0){
+                    //Caso seja o inicio da pilha, irei inverter desde o inicio
+                    //Do contrario, irei inverter do espaco mais um
+                    fimP = (i==0)? 0:i+1;
+                    while(fimP != inicioP){
+                        aux = auxElem[fimP];
+                        auxElem[fimP] = auxElem[inicioP];
+                        auxElem[inicioP] = aux;
+                        fimP++;
+                        if(fimP == inicioP){
+                            break;
+                        }else{
+                            inicioP--;
+                        }
+                    }
+                    inicioP = i-1;
+                }
+            }
+            //Inserindo os valores novamente usando a pilha auxiliar
+            while(topoAux != topo){
+                empilhar(auxElem[topo+1]);
             }
             return 1;
         }
@@ -302,7 +393,12 @@ int main()
     int idPilhaCha = 0;
     //Variavel para armazenar se sera criada uma pilha de inteiro ou caracteres
     int tipPilha = 0;
-    //Variaveis para armazenar as pilhas
+    /** Variaveis para armazenar os enderecos das pilhas.
+     * Nao e possivel, nativamente, armazenar um objeto que seja dinamico
+     * isso pois cada um possui seu tamanho e quantidade de elementos e a linguagem
+     * nao possui suporte para encontrar o inicio e o fim dele, deixando a informacao
+     * incompleta.
+    */
     int **arrInt = NULL;
     int arrIntSize = 0;
     int **arrCha = NULL;
@@ -312,11 +408,11 @@ int main()
     //Variavel para segunda escolha em comparacoes
     int idEscolha2 = 0;
     int tam = 0;
-    //variavel apra armazenamento de respostas dos metodos
+    //variavel para armazenamento de respostas dos metodos
     int res = 0;
     while(flag){
         if(idPilhaInt||idPilhaCha){
-            cout << "------------------------------------ OPCOES ------------------------------------\n\n";
+            cout << COLOR_AMARELO "------------------------------------ OPCOES ------------------------------------\n\n";
             cout << "1 - Criar uma nova pilha.\n";
             cout << "2 - Inverter pilha.\n";
             cout << "3 - Encontrar o maior e o menor valor, calcular a media de todos os elementos.\n";
@@ -325,10 +421,12 @@ int main()
             cout << "6 - Retornar valores impares de uma pilha.\n";
             cout << "7 - Verificar se uma palavra é um palíndromo.\n";
             cout << "8 - Inverter letras de uma frase sem interferir na ordem das palavras\n";
+            cout << "9 - Imprimir pilha de inteiros\n";
+            cout << "10 - Imprimir pilha de caracteres\n";
             cout << "0 - Sair\n";
             cout << "OBS: Opcoes 2|-|6 apenas para pilhas inteiras, 7 e 8 pilhas de caracteres\n";
         }else{
-            cout << "------------------------------------ OPCOES ------------------------------------\n\n";
+            cout << COLOR_AMARELO "------------------------------------ OPCOES ------------------------------------\n\n";
             cout << "1 - Criar uma nova pilha.\n";
             cout << "0 - Sair\n";
         }
@@ -338,10 +436,10 @@ int main()
         case 1:
             cout << "Deseja criar uma pilha de inteiros(1) ou uma pilha de caracteres(2)?: ";
             cin >> tipPilha;
-            cout << "Qual o tamanho da pilha?\n";
+            cout << "Qual o tamanho da pilha?\n" COLOR_RESET;
             cin >> tam;
-            if(tam < 0 ){
-                cout << "Tamanho inserido invalido\n";
+            if(tam < 1 ){
+                cout << COLOR_VERMELHO "Tamanho inserido invalido\n" COLOR_RESET;
                 break;
             }
             if(tipPilha == 1){
@@ -351,7 +449,7 @@ int main()
                 aux->Inicia(tam,idPilhaInt);
                 //Inserindo elementos na pilha
                 for(int i = 0; i<tam;i++){
-                    cout << "Insira o elemento " << i+1 << " da pilha: ";
+                    cout << COLOR_AMARELO "Insira o elemento " << i+1 << " da pilha: " COLOR_RESET;
                     cin >> elem;
                     aux->empilhar(elem);
                 }
@@ -360,20 +458,22 @@ int main()
                 //Realocando o array de pilhas inteiras para inserir mais um endereco
                 arrIntSize++;
                 arrInt = (int**) realloc(arrInt, sizeof(int**)*arrIntSize); // + posição
-                //Inserindo pilha no array
+                //Inserindo o endereco da pilha no array
                 arrInt[idPilhaInt] = (int *) aux;
                 idPilhaInt++;
             }
             else if(tipPilha == 2){
                 //Criando as variaveis da pilha auxiliar
                 PilhaCha *aux = (PilhaCha *) malloc(sizeof(PilhaCha));
-                char elem = ' ';
+                string elem ="";
                 aux->Inicia(tam,idPilhaCha);
+                cout << COLOR_AMARELO "Insira os elementos da pilha: " COLOR_RESET;
+                //cin >> elem;
+                cin.ignore();
+                getline(cin,elem);
                 //Inserindo elementos na pilha
                 for(int i = 0; i<tam;i++){
-                    cout << "Insira o elemento " << i+1 << " da pilha: ";
-                    cin >> elem;
-                    aux->empilhar(elem);
+                    aux->empilhar(elem[i]);
                 }
                 //Pilha criada com sucesso
                 aux->imprimir();
@@ -385,30 +485,30 @@ int main()
                 idPilhaCha++;
             }
             else{
-                cout << "Tipo invalido, insira novamente.\n";
+                cout << COLOR_VERMELHO "Tipo invalido, insira novamente.\n" COLOR_RESET;
             }
             break;
         case 2:
             imprimePilhasInt(idPilhaInt,arrInt);
-            cout << "Escolha qual pilha deseja inverter, insira o ID:\n";
+            cout << COLOR_AMARELO "Escolha qual pilha deseja inverter, insira o ID:\n" COLOR_RESET;
             cin >> idEscolha;
             //Verificando se a escolha e valida
             if(idEscolha > idPilhaInt || idEscolha < 0){
-                cout << "ID invalido\n";
+                cout << COLOR_VERMELHO "ID invalido\n" COLOR_RESET;
             }else{
                 PilhaInt *_pilha = (PilhaInt *) arrInt[idEscolha];
                 _pilha->inverter();
-                cout << "Pilha invertida:\n";
+                cout << COLOR_VERDE "Pilha invertida:\n" COLOR_RESET;
                 _pilha->imprimir();
             }
             break;
         case 3:
             imprimePilhasInt(idPilhaInt,arrInt);
-            cout << "Escolha qual pilha deseja saber o maior/menor valor e a media aritmetica, insira o ID:\n";
+            cout << COLOR_AMARELO "Escolha qual pilha deseja saber o maior/menor valor e a media aritmetica, insira o ID:\n" COLOR_RESET;
             cin >> idEscolha;
             //Verificando se a escolha e valida
             if(idEscolha > idPilhaInt || idEscolha < 0){
-                cout << "ID invalido\n";
+                cout << COLOR_VERMELHO "ID invalido\n" COLOR_RESET;
             }else{
                 PilhaInt *_pilha = (PilhaInt *) arrInt[idEscolha];
                 _pilha->maiorMenorMedia();
@@ -416,38 +516,38 @@ int main()
             break;
         case 4:
             imprimePilhasInt(idPilhaInt,arrInt);
-            cout << "Escolha a primeira pilha a ser comparada: ";
+            cout << COLOR_AMARELO "Escolha a primeira pilha a ser comparada: ";
             cin >> idEscolha;
-            cout << "Escolha a segunda pilha a ser comparada: ";
+            cout << "Escolha a segunda pilha a ser comparada: " COLOR_RESET;
             cin >> idEscolha2;
             if(idEscolha > idPilhaInt || idEscolha < 0){
-                cout << "ID invalido\n";
+                cout << COLOR_VERMELHO "ID invalido\n" COLOR_RESET;
             }else{
                 PilhaInt *_pilha  = (PilhaInt *) arrInt[idEscolha];
                 PilhaInt *_pilha2 = (PilhaInt *) arrInt[idEscolha2];
                 res = _pilha->comparaTamPilha(_pilha2->getTopo());
                 if(res && res != 2){
-                    cout << "Segunda pilha possui mais elementos.\n";
+                    cout << COLOR_VERDE "Segunda pilha possui mais elementos.\n" COLOR_RESET;
                 }else if(!res && res != 2){
-                    cout << "Primeira pilha possui mais elementos.\n";
+                    cout << COLOR_VERDE "Primeira pilha possui mais elementos.\n" COLOR_RESET;
                 }else{
-                    cout << "As duas pilhas possuem o mesmo tamanho.\n";
+                    cout << COLOR_VERDE "As duas pilhas possuem o mesmo tamanho.\n" COLOR_RESET;
                 }
             }
             break;
         case 5:
             {
                 imprimePilhasInt(idPilhaInt,arrInt);
-                cout << "Escolha a primeira pilha a ser comparada: ";
+                cout << COLOR_AMARELO "Escolha a primeira pilha a ser comparada: ";
                 cin >> idEscolha;
-                cout << "Escolha a segunda pilha a ser comparada: ";
+                cout << "Escolha a segunda pilha a ser comparada: " COLOR_RESET;
                 cin >> idEscolha2;
                 //Irei verificar primeiro se os topos das pilhas sao iguais
                 PilhaInt *_pilha  = (PilhaInt *) arrInt[idEscolha];
                 PilhaInt *_pilha2 = (PilhaInt *) arrInt[idEscolha2];
                 res = _pilha->comparaTamPilha(_pilha2->getTopo());
                 if(res != 2){
-                    cout << "As pilhas sao diferentes\n";
+                    cout << COLOR_VERDE "As pilhas sao diferentes\n" COLOR_RESET;
                 }else{
                     //Criando as pilhas auxiliares para nao perder o valor da pilha
                     PilhaInt aux1 = *_pilha;
@@ -455,9 +555,9 @@ int main()
                     //Irei chamar o metodo na primeira pilha passando por valor
                     res = aux1.verificaIgualdade(aux2);
                     if(res){
-                        cout << "As pilha sao iguais.\n";
+                        cout << COLOR_VERDE "As pilha sao iguais.\n" COLOR_RESET;
                     }else{
-                        cout << "As pilhas nao sao iguais.\n";
+                        cout << COLOR_VERDE "As pilhas nao sao iguais.\n" COLOR_RESET;
                     }
                 }
                 break;
@@ -465,7 +565,7 @@ int main()
         case 6:
             {
                 imprimePilhasInt(idPilhaInt,arrInt);
-                cout << "Qual pilha deseja consultar os valores impares? ";
+                cout << COLOR_AMARELO "Qual pilha deseja consultar os valores impares? " COLOR_RESET;
                 cin >> idEscolha;
                 PilhaInt *_pilha  = (PilhaInt *) arrInt[idEscolha];
                 //Realizando copia da pilha para nao alterar os valores.
@@ -476,18 +576,27 @@ int main()
         case 7:
             {
                 imprimePilhasCha(idPilhaCha,arrCha);
-                cout << "Qual pilha deseja verificar se e um palindromo? ";
+                cout << COLOR_AMARELO "Qual pilha deseja verificar se e um palindromo? " COLOR_RESET;
                 cin >> idEscolha;
                 PilhaCha *_pilha = (PilhaCha *) arrCha[idEscolha]; 
                 res = _pilha->palindromo();
                 if(res){
-                    cout << "E um palindromo!\n";
+                    cout << COLOR_VERDE "E um palindromo!\n" COLOR_RESET;
                 }else{
-                    cout << "Nao e um palindromo.\n";
+                    cout << COLOR_VERDE "Nao e um palindromo.\n" COLOR_RESET;
                 }
             }
             break;
         case 8:
+            {
+                imprimePilhasCha(idPilhaCha,arrCha);
+                cout << COLOR_AMARELO "Qual pilha deseja inverter? " COLOR_RESET;
+                cin >> idEscolha;
+                //Faz a conversao do espaco de memoria e salva o endereco da pilha no ponteiro
+                PilhaCha *_pilha = (PilhaCha *) arrCha[idEscolha]; 
+                _pilha->inverteLetras();
+                _pilha->imprimir();
+            }
             break;
         case 9:
             imprimePilhasInt(idPilhaInt,arrInt);
@@ -498,12 +607,12 @@ int main()
         case 0:
             break;
         default:
-            cout<<"Opcao nao identificada, selecione novamente!\n";
+            cout<< COLOR_VERMELHO "Opcao nao identificada, selecione novamente!\n" COLOR_RESET;
             break;
         }
     }
     
-    cout << "Saindo...";
+    cout << COLOR_VERMELHO "Saindo..." COLOR_RESET;
 
     return 0;
 }
