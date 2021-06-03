@@ -101,16 +101,16 @@ int Fila::tamanho() {
 	if(vazia()){
 		return 0;
 	}
-	int y,x=0;
+	int y,tam=0;
 	Fila auxFila;
 	while (remover(y)) {
 		auxFila.inserir(y);
-		x++;
+		tam=tam +1;
 	}
 	while (auxFila.remover(y)) {
 		inserir(y);
 	}
-	return x;
+	return tam;
 }
 
 bool Fila::inverter() {
@@ -241,7 +241,22 @@ Fila Fila::uniao(Fila auxFila) {
 	while (remover(x))
 	{
 		copia1.inserir(x);
-		uni.inserir(x);
+		while (uni.remover(z))
+		{
+			copia3.inserir(z);
+			if(x==z){
+				flag =0;
+				break;
+			}
+		}
+
+		while(copia3.remover(z)){
+			uni.inserir(z);
+		}
+		if(flag){
+			uni.inserir(x);
+		}
+		flag=1;
 	}
 	
 	while(copia1.remover(x)){
@@ -272,7 +287,7 @@ Fila Fila::uniao(Fila auxFila) {
 	while(copia2.remover(y)){
 		auxFila.inserir(y);
 	}
-	
+
 	return uni;
 	
 }
