@@ -13,22 +13,22 @@ int main() {
     Lista minhaLista;
 
     if (minhaLista.inserir(2, 3))        
-        minhaLista.listar();
+        cout << minhaLista.listar() << endl;
     else
         cout << "Não inseriu!\n";
 
     if (minhaLista.inserir(-1, 3))        
-        minhaLista.listar();
+        cout << minhaLista.listar() << endl;
     else
         cout << "Não inseriu!\n";
 
     if (minhaLista.inserir(1, 3))        
-        minhaLista.listar();
+        cout << minhaLista.listar() << endl;
     else
         cout << "Não inseriu!\n";
 
     if (minhaLista.inserir(0, 3))        
-        minhaLista.listar();
+        cout << minhaLista.listar() << endl;
     else
         cout << "Não inseriu!\n";
 
