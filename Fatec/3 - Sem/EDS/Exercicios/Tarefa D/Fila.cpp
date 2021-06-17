@@ -12,7 +12,7 @@ bool Fila::vazia() {
 }
 
 bool Fila::cheia() {
-    return false;
+    return 0;
 }
 
 bool Fila::inserir(int x) {
@@ -27,20 +27,20 @@ bool Fila::inserir(int x) {
         fim = p;
     }
     p->proximoElemento = NULL;
-    return true;
+    return 1;
 }
 
 bool Fila::remover(int &x) {
     PonteiroElemento p;
     if (vazia())
-        return false;
+        return 0;
     x = inicio->valor;
     p = inicio;
     inicio = inicio->proximoElemento;
     delete p;
     if (inicio == NULL)
         fim = NULL;
-    return true;
+    return 1;
 }
 
 
@@ -49,12 +49,12 @@ bool Fila::primeiro(int &x) {
 	// retornar em x o valor do primeiro elemento da lista
 	// seu c�digo aqui:
 	if(vazia()){
-		return false;
+		return 0;
 	}else{
 		//remover(x);
 		//inserir(x);
 		x = inicio->valor;
-		return true;
+		return 1;
 	}
 	
 	
@@ -66,7 +66,7 @@ bool Fila::ultimo(int &x) {
 	// seu c�digo aqui:
 
 	if(vazia()){
-		return false;
+		return 0;
 	}
 
 	int y;
@@ -79,7 +79,7 @@ bool Fila::ultimo(int &x) {
 	while (auxFila.remover(y)) {
 		inserir(y);
 	}
-	return true;	
+	return 1;	
 }
 
 bool Fila::esvaziar() {
@@ -87,12 +87,12 @@ bool Fila::esvaziar() {
 	// remover todos os elementos da lista
 	// seu c�digo aqui:
 	if(vazia()){
-		return false;
+		return 0;
 	}
 	int y;
 	
 	while (remover(y)) {};
-	return true;
+	return 1;
 }
 
 int Fila::tamanho() {
