@@ -32,3 +32,4 @@ SOC/
 SOI/
 .vscode
 dump/
+*.download
