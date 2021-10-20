@@ -13,6 +13,9 @@ Introducao Machine Learning/
 *.png
 *.jpg
 *.xml
+*.pptx
+*.ppt
+*.ini
 node_modules/
 HAR/
 ING/
@@ -40,3 +43,5 @@ Fatec/3 - Sem/ENG2/Atividades/Projeto/Prototype 1_files/36097414-1b74-497e-aab0-
 Fatec/3 - Sem/ENG2/Atividades/Projeto/Prototype 1_files/f39803f7-df02-4169-93eb-7547fb8c961a-1623033814458.css
 Fatec/3 - Sem/ENG2/Atividades/Projeto/Prototype 1_files/include-1623033814458.css
 Fatec/3 - Sem/ENG2/Atividades/Projeto/Prototype 2.vp
+Fatec/4 - Sem/**/*.xlsx
+*.chc
