@@ -47,7 +47,6 @@ class _MenuState extends State<Menu> {
                   child:
                     Wrap(
                       children: [
-                        //Com o banco de dados, irei percorrer a lista com um for e para cada for criar um Card.
                         card("","",""),
                         card("","",""),
                         card("","",""),
