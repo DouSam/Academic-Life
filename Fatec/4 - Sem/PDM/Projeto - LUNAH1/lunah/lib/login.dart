@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lunah/user.dart' as user;
+import 'package:lunah/models/user.dart' as user;
+import 'package:lunah/widgetLib.dart';
 class Login extends StatefulWidget {
   const Login({ Key? key }) : super(key: key);
 
@@ -37,8 +40,8 @@ class _LoginState extends State<Login> {
                 width: MediaQuery.of(context).size.width *0.60,
               ),
               //Text("LUNAH", style: Theme.of(context).textTheme.headline1,),
-              campo("E-mail", txtEmail, TextInputType.emailAddress, "example@example.com",Icon(Icons.email_outlined),false),
-              campo("Senha", txtSenha, TextInputType.visiblePassword, "p@Ssw0rd",Icon(Icons.password_rounded),true),
+              campo("E-mail", txtEmail, TextInputType.emailAddress, "example@example.com",Icon(Icons.email_outlined),false, context),
+              campo("Senha", txtSenha, TextInputType.visiblePassword, "p@Ssw0rd",Icon(Icons.password_rounded),true, context),
               Row(
                 children: [
                   Container(
@@ -64,15 +67,26 @@ class _LoginState extends State<Login> {
               Container(
                 child: ElevatedButton(
                   onPressed: (){
-                    user.actualUser = user.User(txtEmail.text,txtSenha.text);
-                    Navigator.pushNamed(context, "menu");
-                    //txtEmail.dispose();
-                    //txtSenha.dispose();
+                    login(txtEmail.text, txtSenha.text);
                   },
                   child: Text("Acessar"), 
                 ),
                 width: MediaQuery.of(context).size.width *0.60,
                 height: 50,
+              ),
+              Container(
+                child: ElevatedButton(
+                  onPressed: (){
+                    Navigator.pushNamed(context, "registrar");
+                  },
+                  child: Text("Registrar-se"), 
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green.shade400
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width *0.60,
+                height: 50,
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,33 +101,48 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget campo(rotulo, fieldControler, fieldType, fieldHint, fieldIcon,fieldObs){
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-      child: TextFormField(
-        keyboardType: fieldType,
-        controller: fieldControler,
-        style: Theme.of(context).textTheme.headline1,
-        obscureText: fieldObs,
-        decoration: InputDecoration(
-          icon: fieldIcon,
-          labelText: rotulo,
-          labelStyle: Theme.of(context).textTheme.headline2,
-          hintText: fieldHint,
-          hintStyle: Theme.of(context).textTheme.headline3,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).focusColor,
-            ),
-            borderRadius: BorderRadius.circular(10),  
-          ),
-        ),
-      ),
-    );
+  void login(email, senha) {
+
+    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: senha).then((value) async{
+
+      var userQuery = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).get();
+      var userDocument = userQuery.docs.first.data();
+
+      user.actualUser = user.User(
+        userDocument['email'],
+        "",
+        userDocument['nome'],
+        userDocument['cpf'],
+        userDocument['dtNas'],
+        userDocument['crm'],
+        userDocument['tipUsr'],
+        userDocument['carteirinha'],
+        userQuery.docs[0].id
+      );
+
+      Navigator.pushReplacementNamed(context, "menu");
+
+    }).catchError((erro){
+
+      var mensagem = '';
+      if (erro.code == 'user-not-found'){
+        mensagem = 'ERRO: Usuário não encontrado';
+      }else if (erro.code == 'wrong-password'){
+        mensagem = 'ERRO: Usuário ou senha inválida.';
+      }else if ( erro.code == 'invalid-email'){
+        mensagem = 'ERRO: Email inválido';
+      }else{
+        mensagem = erro.message;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(mensagem),
+            duration: const Duration(seconds:2)
+          )
+      );
+
+    });
   }
 }
 

@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:lunah/exame.dart';
-import 'package:lunah/user.dart' as user;
+import 'package:lunah/enviar.dart';
+import 'package:lunah/models/user.dart' as user;
+import 'package:lunah/widgetLib.dart';
 
 class Protocolo extends StatefulWidget {
   const Protocolo({ Key? key }) : super(key: key);
@@ -12,8 +14,10 @@ class Protocolo extends StatefulWidget {
 class _ProtocoloState extends State<Protocolo> {
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)!.settings.arguments as arg;
+    var id = args.id;
+    var resultado = args.resultado;
 
-    var exm = ModalRoute.of(context)!.settings.arguments as Exame;
     return Scaffold(
       appBar: AppBar(
         title: Text("Protocolo"),
@@ -24,7 +28,7 @@ class _ProtocoloState extends State<Protocolo> {
           children: [
             Row(
               children: [
-                Text("Protocolo 194812",
+                Text("Protocolo " + id ,
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
@@ -46,7 +50,7 @@ class _ProtocoloState extends State<Protocolo> {
                       ),
                       children: [
                         TextSpan(
-                          text: exm.nome,
+                          text: resultado.paciente,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black
@@ -71,7 +75,7 @@ class _ProtocoloState extends State<Protocolo> {
                       ),
                       children: [
                         TextSpan(
-                          text: exm.dataNascimento,
+                          text: resultado.dtNas,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black
@@ -96,7 +100,7 @@ class _ProtocoloState extends State<Protocolo> {
                       ),
                       children: [
                         TextSpan(
-                          text: exm.numeroCarterinha,
+                          text: resultado.carteirinha,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black
@@ -121,7 +125,7 @@ class _ProtocoloState extends State<Protocolo> {
                       ),
                       children: [
                         TextSpan(
-                          text: "24/10/2021",
+                          text: resultado.dtPrevi,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black
@@ -146,7 +150,7 @@ class _ProtocoloState extends State<Protocolo> {
                       ),
                       children: [
                         TextSpan(
-                          text: "x8qs4fq9a2h",
+                          text: id,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.red,
@@ -185,109 +189,7 @@ class _ProtocoloState extends State<Protocolo> {
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       ),
-      drawer: Hamburguer(user.actualUser),
+      drawer: hamburguer(user.actualUser,context),
     );
-  }
-
-  Widget Hamburguer(usr){
-    return Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.grey[400],
-              ),
-              child: 
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_circle_rounded,
-                          size: 48,
-                        ),
-                        Text(
-                          "Douglas",
-                          style: Theme.of(context).textTheme.headline2,
-                        ), //Ira ficar o nome do usuário, momentaneamente apenas "DOUGLAS"
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          usr.email,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[500],
-                          )
-                        )
-                      ],
-                    )
-                  ],
-                ),
-            ),
-            ListTile(
-              title: Text(
-                "Ultimas Analises",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'menu');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Enviar Exame",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'enviar');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Resultados",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'pesquisa');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Acompanhamento",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'acompanhamento');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Sobre",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'sobre');
-              },
-            ),
-          ],
-        ),
-    );
-  }
+  }   
 }

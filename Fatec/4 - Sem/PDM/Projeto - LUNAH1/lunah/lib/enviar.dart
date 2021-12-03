@@ -1,21 +1,21 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lunah/user.dart' as user;
-import 'package:lunah/exame.dart' as exame;
+import 'package:lunah/models/resultado.dart';
+import 'package:lunah/models/user.dart' as user;
+import 'package:lunah/widgetLib.dart';
 
 class Enviar extends StatefulWidget {
-  const Enviar({ Key? key }) : super(key: key);
+  const Enviar({Key? key}) : super(key: key);
 
   @override
   _EnviarState createState() => _EnviarState();
 }
 
 class _EnviarState extends State<Enviar> {
-  
-  var formKey  = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
   var ctrlNome = TextEditingController();
-  var ctrlDtN  = TextEditingController();
-  var ctrlNumC = TextEditingController();
-  var ctrlImg  = TextEditingController();
   bool isChecked = false;
 
   Color getColor(Set<MaterialState> states) {
@@ -38,198 +38,94 @@ class _EnviarState extends State<Enviar> {
         centerTitle: true,
       ),
       body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            campo("Nome do Paciente", ctrlNome, TextInputType.name, "Nome Exemplo", Icon(Icons.person_outlined), false),
-            campo("Data de Nascimento", ctrlDtN, TextInputType.datetime, "07/01/2021", Icon(Icons.calendar_today), false),
-            campo("Numero Carteirinha", ctrlNumC, TextInputType.number, "4376497538249728349", Icon(Icons.credit_card), false),
-            Row(
-              children: [
-                Container(
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    fillColor: MaterialStateProperty.resolveWith(getColor),
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    }),
-                  padding: EdgeInsets.fromLTRB(50, 10, 10, 10),
-                ),
-                Text(
-                  "PRIORITARIO",
-                  style: TextStyle(
-                    color: Colors.red
+          key: formKey,
+          child: Column(
+            children: [
+              campo("Nome do Paciente", ctrlNome, TextInputType.name,
+                  "Nome Exemplo", Icon(Icons.person_outlined), false, context),
+              Row(
+                children: [
+                  Container(
+                    child: Checkbox(
+                        checkColor: Colors.white,
+                        fillColor: MaterialStateProperty.resolveWith(getColor),
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        }),
+                    padding: EdgeInsets.fromLTRB(50, 10, 10, 10),
                   ),
-                )
-              ],
-            ),
-            Container(
-              child: ElevatedButton(
-                onPressed: (){
-                  var exm = exame.Exame(ctrlNome.text,ctrlDtN.text,ctrlNumC.text);
-                  Navigator.pushNamed(context, "protocolo", arguments: exm);
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context){
-                      return AlertDialog(
-                        title: Text('Resultado'),
-                        content: Text("Exame enviado, anote o protocolo da apresentado."),
-                        actions: [
-                          TextButton(
-                            onPressed: (){
-                              Navigator.of(context).pop();
-                            }, 
-                            child: Text('fechar'),
-                          ),
-                        ],
-                      );
-                    }
-                  );
-                },
-                child: Text("Enviar"), 
+                  Text(
+                    "PRIORITARIO",
+                    style: TextStyle(color: Colors.red),
+                  )
+                ],
               ),
-              width: MediaQuery.of(context).size.width *0.60,
-              height: 50,
-            )
-          ],
-          mainAxisAlignment: MainAxisAlignment.center,
-        )
-      ),
-      drawer: Hamburguer(user.actualUser),
-    );
+              Container(
+                child: ElevatedButton(
+                  onPressed: () async{
+                    var colUsers = await FirebaseFirestore.instance.collection('users').where('nome',isEqualTo: ctrlNome.text).get();
+                    var paciente = colUsers.docs;
 
-  }
-
-  Widget Hamburguer(usr){
-    return Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.grey[400],
-              ),
-              child: 
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_circle_rounded,
-                          size: 48,
-                        ),
-                        Text(
-                          "Douglas",
-                          style: Theme.of(context).textTheme.headline2,
-                        ), //Ira ficar o nome do usuário, momentaneamente apenas "DOUGLAS"
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          usr.email,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[500],
-                          )
+                    if(paciente.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Paciente não encontrado."),
+                          duration: const Duration(seconds:2)
                         )
-                      ],
-                    )
-                  ],
+                      );
+                    } else {
+                      DateTime now = new DateTime.now();
+                      String data = now.day.toString() + "/" + now.month.toString() + "/" + now.year.toString();
+                      String dataPrev = (now.day + 1).toString() + "/" + now.month.toString() + "/" + now.year.toString();
+
+                      var resul = Resultado(paciente[0]['nome'],user.actualUser.nome,data,"","",dataPrev,isChecked,paciente[0]['carteirinha'],paciente[0]['dtNas']);
+
+                      FirebaseFirestore.instance.collection('resultados').add(resul.map()).then((value){
+                        Navigator.pushNamed(context, "protocolo", arguments: arg(resul, value.id));
+                      }).catchError((erro){
+                        print(erro);
+                      });
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Resultado'),
+                              content: Text(
+                                  "Exame enviado, anote o protocolo da apresentado."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('fechar'),
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  },
+                  child: Text("Enviar"),
                 ),
-            ),
-            ListTile(
-              title: Text(
-                "Ultimas Analises",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Enviar Exame",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'enviar');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Resultados",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'pesquisa');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Acompanhamento",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'acompanhamento');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Sobre",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.popUntil(context, ModalRoute.withName("menu"));
-                Navigator.pushNamed(context, 'sobre');
-              },
-            ),
-          ],
-        ),
+                width: MediaQuery.of(context).size.width * 0.60,
+                height: 50,
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          )),
+      drawer: hamburguer(user.actualUser, context),
     );
   }
 
-  Widget campo(rotulo, fieldControler, fieldType, fieldHint, fieldIcon,fieldObs){
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-      child: TextFormField(
-        keyboardType: fieldType,
-        controller: fieldControler,
-        style: Theme.of(context).textTheme.headline1,
-        obscureText: fieldObs,
-        decoration: InputDecoration(
-          icon: fieldIcon,
-          labelText: rotulo,
-          labelStyle: Theme.of(context).textTheme.headline2,
-          hintText: fieldHint,
-          hintStyle: Theme.of(context).textTheme.headline3,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).focusColor,
-            ),
-            borderRadius: BorderRadius.circular(10),  
-          ),
-        ),
-      ),
-    );
-  }
+  
+}
+
+// ignore: camel_case_types
+class arg {
+  Resultado resultado;
+  String id;
+  arg(this.resultado,this.id);
 }

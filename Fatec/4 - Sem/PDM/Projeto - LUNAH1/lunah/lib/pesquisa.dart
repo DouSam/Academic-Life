@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lunah/user.dart' as user;
+import 'package:lunah/models/user.dart' as user;
+import 'package:lunah/widgetLib.dart';
 
 class Pesquisa extends StatefulWidget {
   const Pesquisa({ Key? key }) : super(key: key);
@@ -37,9 +38,9 @@ class _PesquisaState extends State<Pesquisa> {
         key: formKey,
         child: Column(
           children: [
-            campo("Nome do Paciente", ctrlNome, TextInputType.name, "Nome Exemplo", Icon(Icons.person_outlined), false),
-            campo("Data de Nascimento", ctrlDtN, TextInputType.datetime, "07/01/2021", Icon(Icons.calendar_today), false),
-            campo("Numero Carteirinha", ctrlNumC, TextInputType.number, "4376497538249728349", Icon(Icons.credit_card), false),
+            campo("Nome do Paciente", ctrlNome, TextInputType.name, "Nome Exemplo", Icon(Icons.person_outlined), false,context),
+            campo("Data de Nascimento", ctrlDtN, TextInputType.datetime, "07/01/2021", Icon(Icons.calendar_today), false,context),
+            campo("Numero Carteirinha", ctrlNumC, TextInputType.number, "4376497538249728349", Icon(Icons.credit_card), false,context),
             Column(
               children: [
                 ListTile(
@@ -73,7 +74,7 @@ class _PesquisaState extends State<Pesquisa> {
                 onPressed: (){
                   var obj = Paciente(ctrlNome.text,ctrlDtN.text,ctrlNumC.text);
                   Navigator.popUntil(context, ModalRoute.withName("menu"));
-                  Navigator.pushNamed(context, 'menu');
+                  Navigator.pushNamed(context, 'menu',arguments: Filter(obj.nome, obj.dtnas, obj.numc));
                   showDialog(
                     context: context,
                     builder: (BuildContext context){
@@ -101,131 +102,15 @@ class _PesquisaState extends State<Pesquisa> {
           mainAxisAlignment: MainAxisAlignment.center,
         )
       ),
-      drawer: Hamburguer(user.actualUser),
+      drawer: hamburguer(user.actualUser, context),
     );
   }
 
-  Widget Hamburguer(usr){
-    return Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.grey[400],
-              ),
-              child: 
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_circle_rounded,
-                          size: 48,
-                        ),
-                        Text(
-                          "Douglas",
-                          style: Theme.of(context).textTheme.headline2,
-                        ), //Ira ficar o nome do usuário, momentaneamente apenas "DOUGLAS"
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          usr.email,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[500],
-                          )
-                        )
-                      ],
-                    )
-                  ],
-                ),
-            ),
-            ListTile(
-              title: Text(
-                "Ultimas Analises",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Enviar Exame",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.pushNamed(context, 'enviar');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Resultados",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.pushNamed(context, 'pesquisa');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Acompanhamento",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.pushNamed(context, 'acompanhamento');
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Sobre",
-                style: Theme.of(context).textTheme.headline3
-              ),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.pop(context);
-                Navigator.pushNamed(context, 'sobre');
-              },
-            ),
-          ],
-        ),
-    );
-  }
-  Widget campo(rotulo, fieldControler, fieldType, fieldHint, fieldIcon,fieldObs){
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-      child: TextFormField(
-        keyboardType: fieldType,
-        controller: fieldControler,
-        style: Theme.of(context).textTheme.headline1,
-        obscureText: fieldObs,
-        decoration: InputDecoration(
-          icon: fieldIcon,
-          labelText: rotulo,
-          labelStyle: Theme.of(context).textTheme.headline2,
-          hintText: fieldHint,
-          hintStyle: Theme.of(context).textTheme.headline3,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).focusColor,
-            ),
-            borderRadius: BorderRadius.circular(10),  
-          ),
-        ),
-      ),
-    );
-  }
+}
+
+class Filter{
+  String nome;
+  String dtnas;
+  String carteirinha;
+  Filter(this.nome,this.dtnas,this.carteirinha);
 }

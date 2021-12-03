@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "739885057625",
+    "project_id": "lunah-e824f",
+    "storage_bucket": "lunah-e824f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739885057625:android:81942ae915880cee161348",
+        "android_client_info": {
+          "package_name": "com.example.lunah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739885057625-j07gck2qm96s471f3e6p9kjti9o3f59r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAZYP_TCLrem2x_Z9cLWGJuyZucK2cLck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739885057625-j07gck2qm96s471f3e6p9kjti9o3f59r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

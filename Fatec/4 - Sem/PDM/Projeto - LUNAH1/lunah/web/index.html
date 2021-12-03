@@ -27,6 +27,26 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+
+  <script type="module">
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrNfKmjWp1I3CGIFuFxSN8hC_fnr5NtL0",
+      authDomain: "lunah-e824f.firebaseapp.com",
+      projectId: "lunah-e824f",
+      storageBucket: "lunah-e824f.appspot.com",
+      messagingSenderId: "739885057625",
+      appId: "1:739885057625:web:b3159030fbf82112161348",
+      measurementId: "G-4B03DXZKMV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

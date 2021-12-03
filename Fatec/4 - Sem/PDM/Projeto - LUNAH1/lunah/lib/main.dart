@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lunah/acompanhamento.dart';
+
 import 'package:lunah/enviar.dart';
+import 'package:lunah/laudar.dart';
 import 'package:lunah/login.dart';
 import 'package:lunah/menu.dart';
 import 'package:lunah/pesquisa.dart';
 import 'package:lunah/protocolo.dart';
+import 'package:lunah/registrar.dart';
 import 'package:lunah/resultado.dart';
 import 'package:lunah/sobre.dart';
 
-void main() {
+void main() async{
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -15,12 +19,15 @@ void main() {
       initialRoute: 'login',
       routes: {
         'login'     : (context) => Login(),
+        'registrar' : (context) => Registrar(),
         'menu'      : (context) => Menu(),
         'sobre'     : (context) => Sobre(),
         'enviar'    : (context) => Enviar(),
         'protocolo' : (context) => Protocolo(),
         'resultado' : (context) => Resultado(),
-        'pesquisa'  : (context) => Pesquisa()
+        'pesquisa'  : (context) => Pesquisa(),
+        'laudar'    : (context) => Laudar(),
+        'acomp'     : (context) => Acomapnhamento()
       },
       theme: ThemeData(
         primaryColor: Colors.grey[300],
