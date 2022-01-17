@@ -1,3 +1,5 @@
+[<h2>English version Here</h2>](https://github.com/DouSam/Academic-Life/blob/master/README.us.md)
+
 <h1 align="center">Projetos academicos</h1>
 
 <p align="justify">Aqui estão alguns exercícios, provas e trabalhos que realizei durante a/as graduações. Vários arquivos podem não estar comentados ou organizados pois ainda estou corrigindo o repositório. Se estiver procurando algum projeto especifico, que não academico mas de cunho comercial, olhe nos outros repositórios!</p>
