@@ -8,7 +8,7 @@
 
 <p align="center">
 <a href="https://github.com/DouSam" align="center">
- <img style="border-radius: 60%;" src="https://lh3.googleusercontent.com/o49VhdIK8p4hVv08luql8OyVy9d3Y8McrzVD8PPQ28UU7Gq3eAN-9KPi0zCxMgHh_jY0Ah7qj4sHkQXvEOa408P09QtEkDTSngRrKtDeJlllYuaKDXPH6ww3TUXw2sdHoNSIuwCA1fY=w2400" width="150px;" alt=""/>
+ <img style="border-radius: 100%;" src="https://lh3.googleusercontent.com/o49VhdIK8p4hVv08luql8OyVy9d3Y8McrzVD8PPQ28UU7Gq3eAN-9KPi0zCxMgHh_jY0Ah7qj4sHkQXvEOa408P09QtEkDTSngRrKtDeJlllYuaKDXPH6ww3TUXw2sdHoNSIuwCA1fY=w2400" width="150px;" alt=""/>
  <br />
  <sub><b>Douglas Samuel</b></sub></a></a>
 
