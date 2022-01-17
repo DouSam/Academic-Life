@@ -1,6 +1,8 @@
 <h1 align="center">Projetos academicos</h1>
 
-<p align="center">Aqui estão alguns exercícios, provas e trabalhos que realizei durante a/as graduações. Vários arquivos podem não estar comentados ou organizados pois ainda estou corrigindo o repositório. Se estiver procurando algum projeto especifico, que não academico mas de cunho comercial, olhe nos outros repositórios!</p>
+<p align="justify">Aqui estão alguns exercícios, provas e trabalhos que realizei durante a/as graduações. Vários arquivos podem não estar comentados ou organizados pois ainda estou corrigindo o repositório. Se estiver procurando algum projeto especifico, que não academico mas de cunho comercial, olhe nos outros repositórios!</p>
+
+<p align="justify">Basicamente cada pasta é uma instituição de ensino que frequentei ou frequento, dentro delas estão seus semestres, disciplinas e os programas que desenvolvi para as mesmas.</p>
 
 <h1 align="center"> Autor </h1> 
 
