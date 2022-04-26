@@ -1,0 +1,187 @@
+{
+  "results" : [
+    {
+      "columns" : [
+        {
+          "name" : "CONSTRAINT_NAME",
+          "type" : ""
+        },
+        {
+          "name" : "CONSTRAINT_TYPE",
+          "type" : ""
+        },
+        {
+          "name" : "TABLE_NAME",
+          "type" : ""
+        }
+      ],
+      "items" : [
+        {
+          "constraint_name" : "FK_REGIAO_PAIS",
+          "constraint_type" : "R",
+          "table_name" : "TB_PAIS"
+        },
+        {
+          "constraint_name" : "FK_ID_PAIS",
+          "constraint_type" : "R",
+          "table_name" : "TB_LOCALIZACAO"
+        },
+        {
+          "constraint_name" : "FK_LOC_DEPARTAMENTO",
+          "constraint_type" : "R",
+          "table_name" : "TB_DEPARTAMENTO"
+        },
+        {
+          "constraint_name" : "FK_EMP_DPTO",
+          "constraint_type" : "R",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "FK_HIST_FUNCAO_DEPTO",
+          "constraint_type" : "R",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "FK_EMP_FUNCAO",
+          "constraint_type" : "R",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "FK_HIST_FUNC_FUNCAO",
+          "constraint_type" : "R",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "FK_EMP_GERENTE",
+          "constraint_type" : "R",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "FK_GERENTE_DEPTO",
+          "constraint_type" : "R",
+          "table_name" : "TB_DEPARTAMENTO"
+        },
+        {
+          "constraint_name" : "FK_HIST_FUNC_EMP",
+          "constraint_type" : "R",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "NN_ID_REGIAO",
+          "constraint_type" : "C",
+          "table_name" : "TB_REGIAO"
+        },
+        {
+          "constraint_name" : "PK_ID_REGIAO",
+          "constraint_type" : "P",
+          "table_name" : "TB_REGIAO"
+        },
+        {
+          "constraint_name" : "NN_ID_PAIS",
+          "constraint_type" : "C",
+          "table_name" : "TB_PAIS"
+        },
+        {
+          "constraint_name" : "PK_ID_PAIS",
+          "constraint_type" : "P",
+          "table_name" : "TB_PAIS"
+        },
+        {
+          "constraint_name" : "PK_ID_LOC",
+          "constraint_type" : "P",
+          "table_name" : "TB_LOCALIZACAO"
+        },
+        {
+          "constraint_name" : "NN_NM_DEPTO",
+          "constraint_type" : "C",
+          "table_name" : "TB_DEPARTAMENTO"
+        },
+        {
+          "constraint_name" : "PK_ID_DEPARTAMENTO",
+          "constraint_type" : "P",
+          "table_name" : "TB_DEPARTAMENTO"
+        },
+        {
+          "constraint_name" : "NN_LOC_CIDADE",
+          "constraint_type" : "C",
+          "table_name" : "TB_LOCALIZACAO"
+        },
+        {
+          "constraint_name" : "NN_DS_FUNCAO",
+          "constraint_type" : "C",
+          "table_name" : "TB_FUNCAO"
+        },
+        {
+          "constraint_name" : "PK_ID_FUNCAO",
+          "constraint_type" : "P",
+          "table_name" : "TB_FUNCAO"
+        },
+        {
+          "constraint_name" : "NN_EMP_SOBRENOME",
+          "constraint_type" : "C",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "NN_EMP_EMAIL",
+          "constraint_type" : "C",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "NN_EMP_DT_ADM",
+          "constraint_type" : "C",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "NN_EMP_FUNCAO",
+          "constraint_type" : "C",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "MIN_EMP_SALARIO",
+          "constraint_type" : "C",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "UN_EMP_EMAIL",
+          "constraint_type" : "U",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "PK_ID_EMP",
+          "constraint_type" : "P",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "constraint_name" : "NN_HIST_FUNC_ID_EMP",
+          "constraint_type" : "C",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "NN_HIST_FUNC_DT_INICIO",
+          "constraint_type" : "C",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "NN_HIST_FUNC_DT_TERMINO",
+          "constraint_type" : "C",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "NN_HIST_FUNC_ID_FUNCAO",
+          "constraint_type" : "C",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "CK_HIST_FUNC_DATA_INTERVALO",
+          "constraint_type" : "C",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "constraint_name" : "PK_HIST_FUNC_ID_EMP",
+          "constraint_type" : "P",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        }
+      ]
+    }
+  ]
+}

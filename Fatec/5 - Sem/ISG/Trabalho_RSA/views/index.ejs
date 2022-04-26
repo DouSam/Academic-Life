@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RSA</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    </head>
+
+    <body style="background:rgb(123, 203, 250)">
+        <div class="mx-2">
+            <h1 class="text-center">RSA</h1>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="P" class="form-label fw-bold">P</label>
+                        <input type="number" class="form-control" id="P" onchange="inputChange(this)" value="17">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="Q" class="form-label fw-bold">Q</label>
+                        <input type="number" class="form-control" id="Q" onchange="inputChange(this)" value="71">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="input" class="form-label fw-bold">Texto de entrada</label>
+                        <input type="text" class="form-control" id="input" value="FATEC 10">
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-6 text-center" style="border-right: 1px solid black;">
+                    <button type="button" class="btn btn-success" onclick="criptografar(this)">Criptografar</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button type="button" class="btn btn-warning" onclick="descriptografar(this)">Descriptografar</button>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col">
+                    <h3 id="output"></h3>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col">
+                    <h3>Referência</h3>
+                    <a href="https://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO1&Sect2=HITOFF&d=PALL&p=1&u=%2Fnetahtml%2FPTO%2Fsrchnum.htm&r=1&f=G&l=50&s1=4405829.PN.&OS=PN/4405829&RS=PN/4405829">Patente</a> <br>
+                    <a href="https://www.techtarget.com/searchsecurity/definition/RSA">Techtarget</a> <br>
+                    <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">Wikipedia</a> <br>
+                    <a href="https://www.lambda3.com.br/2012/12/entendendo-de-verdade-a-criptografia-rsa/">Lambda3</a><br>
+
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+        <script src="/scripts/RSA.js"></script>
+        <script src="/scripts/javascript.js"></script>
+    </body>
+
+</html>

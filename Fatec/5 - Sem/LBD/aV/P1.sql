@@ -1,0 +1,65 @@
+-- 1
+SELECT e.nome || ' trabalha para ' || NVL(g.nome, 'os acionistas') || '.'
+FROM tb_empregado e
+LEFT OUTER JOIN tb_empregado g
+	ON (e.id_gerente = g.id_empregado)
+ORDER BY g.nome DESC;
+
+-- 2
+SELECT nome, salario, percentual_comissao, NVL2(percentual_comissao, salario * (1 + percentual_comissao), salario + 2000) "Novo Salário"
+FROM tb_empregado;
+
+-- 3
+SELECT e.nome, e.sobrenome, d.id_departamento, d.nm_departamento
+FROM tb_empregado e
+RIGHT OUTER JOIN tb_departamento d
+	ON (e.id_departamento = d.id_departamento);
+    
+-- 4
+SELECT nome, sobrenome, salario
+FROM tb_empregado
+WHERE salario < (SELECT salario 
+                 FROM tb_empregado
+                 WHERE id_empregado = 182);
+
+-- 5
+CREATE OR REPLACE PROCEDURE sp_questao_05 (p_num_dp IN tb_departamento.id_departamento%TYPE)
+AS
+    v_control   INTEGER;
+    v_nmDp      tb_departamento.nm_departamento%TYPE;
+    v_nmCid     tb_localizacao.cidade%TYPE;
+    v_nmEst     tb_localizacao.estado%TYPE;
+    v_nmPas     tb_pais.nm_pais%TYPE;
+    v_nmRes     tb_regiao.nm_regiao%TYPE;
+BEGIN
+    -- VAlidando se o dp existe
+    SELECT COUNT(1) INTO v_control
+    FROM tb_departamento
+    WHERE id_departamento = p_num_dp;
+    
+    IF v_control = 1 THEN
+		
+		SELECT d.nm_departamento, l.cidade, l.estado, p.nm_pais, r.nm_regiao 
+        INTO v_nmDp, v_nmCid, v_nmEst, v_nmPas, v_nmRes
+        FROM tb_departamento d
+        INNER JOIN tb_localizacao l ON (d.id_localizacao = l.id_localizacao)
+        INNER JOIN tb_pais p ON (l.id_pais = p.id_pais)
+        INNER JOIN tb_regiao r ON (p.id_regiao = r.id_regiao)
+        WHERE d.id_departamento = p_num_dp;
+        
+        DBMS_OUTPUT.PUT_LINE('Depto: ' || v_nmDp ||
+                             ' - Cidade: ' || v_nmCid ||
+                             ' - Estado: ' || v_nmEst ||
+                             ' - País: '   || v_nmPas ||
+                             ' - Região: ' || v_nmRes);
+                             
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Departamento não encontrado.');
+    END IF;
+END sp_questao_05;
+
+SET serveroutput ON
+BEGIN
+    sp_questao_05(999);
+    sp_questao_05(10);
+END;

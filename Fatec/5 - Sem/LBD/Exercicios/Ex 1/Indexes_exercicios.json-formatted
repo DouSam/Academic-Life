@@ -1,0 +1,50 @@
+{
+  "results" : [
+    {
+      "columns" : [
+        {
+          "name" : "INDEX_NAME",
+          "type" : ""
+        },
+        {
+          "name" : "TABLE_NAME",
+          "type" : ""
+        }
+      ],
+      "items" : [
+        {
+          "index_name" : "PK_ID_DEPARTAMENTO",
+          "table_name" : "TB_DEPARTAMENTO"
+        },
+        {
+          "index_name" : "UN_EMP_EMAIL",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "index_name" : "PK_ID_EMP",
+          "table_name" : "TB_EMPREGADO"
+        },
+        {
+          "index_name" : "PK_ID_FUNCAO",
+          "table_name" : "TB_FUNCAO"
+        },
+        {
+          "index_name" : "PK_HIST_FUNC_ID_EMP",
+          "table_name" : "TB_HISTORICO_FUNCAO"
+        },
+        {
+          "index_name" : "PK_ID_LOCALIZACAO",
+          "table_name" : "TB_LOCALIZACAO"
+        },
+        {
+          "index_name" : "PK_ID_PAIS",
+          "table_name" : "TB_PAIS"
+        },
+        {
+          "index_name" : "PK_ID_REGIAO",
+          "table_name" : "TB_REGIAO"
+        }
+      ]
+    }
+  ]
+}

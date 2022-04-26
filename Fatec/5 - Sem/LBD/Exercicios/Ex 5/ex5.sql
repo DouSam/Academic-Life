@@ -1,0 +1,24 @@
+-- Ex 1
+SELECT 'O identificador da ' || ds_funcao || ' é o ID: ' || id_funcao AS "Descrição da Função"
+FROM tb_funcao;
+
+-- Ex 2
+SELECT 22/7 * 6000 * 6000 "Área"
+FROM dual;
+
+-- Ex 3
+SELECT nm_departamento
+FROM tb_departamento
+WHERE nm_departamento LIKE '%ing';
+
+-- Ex 4
+SELECT ds_funcao, base_salario, teto_salario - base_salario AS diferenca
+FROM tb_funcao
+WHERE ds_funcao LIKE '%Presidente%' OR
+      ds_funcao LIKE '%Gerente%'
+ORDER BY diferenca DESC, ds_funcao DESC;
+
+-- Ex 5
+SELECT id_empregado, nome, salario, salario * 12 "Salário Anual", &&aliquota Aliquota, &&aliquota * (salario * 12) Aliquota
+FROM tb_empregado
+WHERE id_empregado = &id_empregado;
