@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="estilo.css">
+        <title>5oADS</title>
+        <!-- <meta http-equiv="refresh" content="5"> -->
+</head>
+    <body>
+        <div class="menu-logo">
+            <div><img src="http://www.fatecrp.edu.br/wp-content/themes/fatecrp/dist/img/cps.svg" alt="Logo CPS"></div>
+        </div>
+        <div class="menu">
+            <div>ADS</div>
+            <div>GNI</div>
+            <div>SBM</div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+-- Desafio 1
+SELECT sobrenome, id_departamento, salario
+FROM tb_empregado externa
+WHERE EXISTS (SELECT 1
+			  FROM tb_empregado interna
+			  WHERE externa.id_departamento = interna.id_departamento AND
+					externa.salario = interna.salario AND
+					interna.percentual_comissao IS NOT NULL);
+					-- 34 tuplas
+
+-- Desafio 2
+
+													
+-- Desafio 3
+SELECT sobrenome, salario
+FROM tb_empregado ee
+WHERE (salario, percentual_comissao) IN (SELECT salario, NVL(percentual_comissao, 0)
+										 FROM tb_empregado ei
+										 WHERE ee.salario = ei.salario
+											AND ee.percentual_comissao = ei.percentual_comissao
+											AND ei.sobrenome <> 'Kochhar');
+											
+											-- Trazer todos os colaboradores com mesmo salario e percentual que o Kochhar menos o Kochhar 
