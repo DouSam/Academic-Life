@@ -1,0 +1,37 @@
+[
+    {
+        "codigo": 2,
+        "nome": "Arroz",
+        "valor_compra": 20.0,
+        "valor_venda": 25.0,
+        "quantidade": 10
+    },
+    {
+        "codigo": 3,
+        "nome": "Bife",
+        "valor_compra": 20.0,
+        "valor_venda": 25.0,
+        "quantidade": 4
+    },
+    {
+        "codigo": 4,
+        "nome": "Cenoura",
+        "valor_compra": 3.0,
+        "valor_venda": 3.75,
+        "quantidade": 20
+    },
+    {
+        "codigo": 1,
+        "nome": "Feijao",
+        "valor_compra": 15.0,
+        "valor_venda": 18.75,
+        "quantidade": 4
+    },
+    {
+        "codigo": 5,
+        "nome": "Marmita",
+        "valor_compra": 10.0,
+        "valor_venda": 12.5,
+        "quantidade": 20
+    }
+]
